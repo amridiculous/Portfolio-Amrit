@@ -172,6 +172,77 @@ export default function ProjectsCanvas({ isHovered, isMobile }) {
       />
 
       <AnimatePresence>
+        {isHovered && isMobile && (
+          <motion.div
+            key="mobile-stack"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}
+          >
+            <div style={{ position: 'relative', width: '78%' }}>
+              {[2, 1].map((i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute', top: 0, left: 0, right: 0,
+                    transform: `translateY(${i * 20}px) scale(${1 - i * 0.03})`,
+                    transformOrigin: 'top center',
+                    zIndex: 3 - i,
+                    opacity: 1 - i * 0.38,
+                    background: 'rgba(248,247,243,0.97)',
+                    border: `1px solid rgba(0,0,0,0.07)`,
+                    borderTop: `3px solid ${COLOR}`,
+                    borderRadius: 10,
+                    padding: '14px 16px',
+                    boxShadow: '0 8px 24px rgba(0,0,0,0.13)',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <div style={{ fontSize: 15, fontWeight: 700, color: '#1d1d1f' }}>{PROJ_CARDS[i].title}</div>
+                </div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  position: 'relative', zIndex: 3,
+                  background: 'rgba(248,247,243,0.97)',
+                  border: `1px solid rgba(0,0,0,0.07)`,
+                  borderTop: `3px solid ${COLOR}`,
+                  borderRadius: 10,
+                  padding: '14px 16px',
+                  boxShadow: '0 8px 28px rgba(0,0,0,0.16)',
+                }}
+              >
+                {PROJ_CARDS[0].badge && (
+                  <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: COLOR, marginBottom: 5 }}>
+                    {PROJ_CARDS[0].badge}
+                  </div>
+                )}
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#1d1d1f', lineHeight: 1.3, marginBottom: 6 }}>
+                  {PROJ_CARDS[0].title}
+                </div>
+                <div style={{ fontSize: 13, color: '#3a3a3c', lineHeight: 1.55, marginBottom: 8 }}>
+                  {PROJ_CARDS[0].desc}
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, borderTop: '1px solid rgba(0,0,0,0.07)', paddingTop: 8 }}>
+                  {PROJ_CARDS[0].tags.map(tag => (
+                    <span key={tag} style={{ fontSize: 10, color: '#6e6e73', border: '1px solid rgba(0,0,0,0.13)', padding: '2px 7px', borderRadius: 20, whiteSpace: 'nowrap' }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
         {isHovered && !isMobile && PROJ_CARDS.map((card, i) => {
           const angle = (2 * Math.PI * i) / PROJ_CARDS.length - Math.PI / 2
           const tx = RADIUS * Math.cos(angle)

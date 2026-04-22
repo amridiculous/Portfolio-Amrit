@@ -153,6 +153,54 @@ export default function CreativeCanvas({ isHovered, isMobile }) {
       />
 
       <AnimatePresence>
+        {isHovered && isMobile && (
+          <motion.div
+            key="mobile-stack"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}
+          >
+            <div style={{ position: 'relative', width: '72%' }}>
+              {[2, 1].map((i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute', top: 0, left: 0, right: 0,
+                    transform: `translateY(${i * 18}px) rotate(${i % 2 === 0 ? 3 : -2}deg) scale(${1 - i * 0.03})`,
+                    transformOrigin: 'top center',
+                    zIndex: 3 - i,
+                    opacity: 1 - i * 0.38,
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <img
+                    src={PHOTOS[i].src}
+                    alt=""
+                    style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block', borderRadius: 10, boxShadow: '0 8px 24px rgba(0,0,0,0.22)' }}
+                  />
+                </div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                style={{ position: 'relative', zIndex: 3 }}
+              >
+                <img
+                  src={PHOTOS[0].src}
+                  alt=""
+                  style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block', borderRadius: 10, boxShadow: '0 10px 32px rgba(0,0,0,0.3)' }}
+                />
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
         {isHovered && !isMobile && PHOTOS.map((photo, i) => {
           const angle = (2 * Math.PI * i) / PHOTOS.length - Math.PI / 2
           const tx = RADIUS * Math.cos(angle)
