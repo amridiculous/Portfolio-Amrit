@@ -133,30 +133,31 @@ export default function Home() {
 
           {/* Bio — visible by default, fades out when a section is hovered */}
           <motion.div
-            animate={{ opacity: hoveredSection ? 0 : 1, y: hoveredSection ? 6 : 0 }}
+            animate={{ opacity: hoveredSection ? 0 : 1 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
             style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 52px', maxWidth: 740, pointerEvents: 'none' }}
           >
-            <BioCentered>
-              {BIO_WORDS.map((word, i) => (
-                <motion.span
-                  key={i}
-                  animate={
-                    hoveredName
-                      ? { y: -5 }
-                      : { y: 0 }
-                  }
-                  transition={
-                    hoveredName
-                      ? { duration: 1.4, delay: i * 0.05, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
-                      : { duration: 0.4, ease: 'easeOut' }
-                  }
-                  style={{ display: 'inline-block', marginRight: '0.28em' }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </BioCentered>
+            <motion.div
+              animate={{ y: hoveredName ? [0, 200, 0, -200, 0] : 0 }}
+              transition={
+                hoveredName
+                  ? {
+                      duration: 5.7,
+                      repeat: Infinity,
+                      ease: ['easeInOut', 'easeInOut', 'easeInOut', 'easeInOut'],
+                      times: [0, 0.25, 0.5, 0.75, 1],
+                    }
+                  : { duration: 0.8, ease: 'easeInOut' }
+              }
+            >
+              <BioCentered>
+                {BIO_WORDS.map((word, i) => (
+                  <span key={i} style={{ display: 'inline-block', marginRight: '0.28em' }}>
+                    {word}
+                  </span>
+                ))}
+              </BioCentered>
+            </motion.div>
           </motion.div>
 
           {/* Canvas animations — appear on section hover (desktop) or auto-cycle (mobile) */}

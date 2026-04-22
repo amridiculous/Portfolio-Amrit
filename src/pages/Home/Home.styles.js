@@ -69,7 +69,11 @@ export const HeroPreviewZone = styled.div`
 
 export const MarqueeRow = styled.div`
   line-height: 1;
-  padding-bottom: 0;
+  padding-bottom: 28px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding-bottom: 24px;
+  }
 `
 
 export const MarqueeInner = styled.div`
