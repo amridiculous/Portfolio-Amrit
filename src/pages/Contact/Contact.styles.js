@@ -8,7 +8,7 @@ export const Wrapper = styled.main`
 `
 
 export const Container = styled.div`
-  max-width: 900px;
+  max-width: 560px;
   margin: 0 auto;
   padding: 60px 22px 100px;
 `
@@ -45,31 +45,57 @@ export const ContactGrid = styled.div`
 export const ContactInfo = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 16px;
 `
 
-export const InfoItem = styled.div`
-  margin-bottom: 28px;
+export const InfoItem = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.md};
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  cursor: ${({ as: as_ }) => as_ === 'div' ? 'default' : 'pointer'};
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.surfaceHover};
+    border-color: ${({ $color }) => $color || 'transparent'};
+  }
+`
+
+export const InfoIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: ${({ $color }) => $color ? `${$color}18` : 'transparent'};
+  color: ${({ $color, theme }) => $color || theme.colors.text};
+  flex-shrink: 0;
+`
+
+export const InfoText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 `
 
 export const InfoLabel = styled.p`
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  margin-bottom: 6px;
+  color: ${({ theme }) => theme.colors.text};
 `
 
-export const InfoLink = styled.a`
-  font-size: 15px;
+export const InfoValue = styled.p`
+  font-size: 14px;
   color: ${({ theme }) => theme.colors.text};
-  transition: color 0.2s ease;
   letter-spacing: -0.01em;
-  display: block;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.accent};
-  }
 `
 
 export const Form = styled.form`
@@ -162,5 +188,11 @@ export const SubmitButton = styled(motion.button)`
 export const FormNote = styled.p`
   font-size: 13px;
   color: ${({ theme }) => theme.colors.textSecondary};
+  letter-spacing: -0.005em;
+`
+
+export const SuccessMessage = styled.p`
+  font-size: 13px;
+  color: #34c759;
   letter-spacing: -0.005em;
 `

@@ -7,6 +7,8 @@ import {
   Subtitle,
   Section,
   SectionLabel,
+  CategoryGroup,
+  CategoryLabel,
   BioBlock,
   BioText,
   SkillsGrid,
@@ -17,48 +19,67 @@ import {
   CertBadge,
 } from './About.styles'
 
-const SKILLS = [
-  // Core Salesforce
-  { name: 'Apex', level: 'Expert' },
-  { name: 'Lightning Web Components', level: 'Expert' },
-  { name: 'Service Cloud', level: 'Expert' },
-  { name: 'Field Service Lightning', level: 'Expert' },
-  { name: 'Salesforce Flow', level: 'Advanced' },
-  { name: 'SOQL / SOSL', level: 'Advanced' },
-  { name: 'REST / SOAP Integrations', level: 'Advanced' },
-  { name: 'Visualforce', level: 'Advanced' },
-  { name: 'CTI & Live Agent', level: 'Advanced' },
-  { name: 'Deployment Strategies', level: 'Advanced' },
-  { name: 'Code Review', level: 'Advanced' },
-  { name: 'JavaScript', level: 'Intermediate' },
-  // Salesforce AI
-  { name: 'Agentforce', level: 'Advanced' },
-  { name: 'Einstein Copilot', level: 'Advanced' },
-  { name: 'Einstein GPT', level: 'Advanced' },
-  { name: 'Prompt Builder', level: 'Advanced' },
-  { name: 'Model Builder', level: 'Intermediate' },
-  { name: 'Einstein Prediction Builder', level: 'Intermediate' },
-  { name: 'Einstein Next Best Action', level: 'Intermediate' },
-  { name: 'Einstein Bots', level: 'Advanced' },
-  { name: 'Data Cloud', level: 'Intermediate' },
-  { name: 'Einstein Analytics', level: 'Intermediate' },
-  { name: 'Einstein Vision & Language', level: 'Intermediate' },
+const SKILL_GROUPS = [
+  {
+    category: 'Web Development',
+    color: '#0071e3',
+    skills: [
+      { name: 'JavaScript', level: 'Intermediate' },
+      { name: 'React', level: 'Intermediate' },
+      { name: 'REST / SOAP Integrations', level: 'Advanced' },
+      { name: 'HTML / CSS', level: 'Intermediate' },
+      { name: 'Node.js', level: 'Intermediate' },
+    ],
+  },
+  {
+    category: 'Salesforce',
+    color: '#00a1e0',
+    skills: [
+      { name: 'Apex', level: 'Expert' },
+      { name: 'Lightning Web Components', level: 'Expert' },
+      { name: 'Service Cloud', level: 'Expert' },
+      { name: 'Field Service Lightning', level: 'Expert' },
+      { name: 'Salesforce Flow', level: 'Advanced' },
+      { name: 'SOQL / SOSL', level: 'Advanced' },
+      { name: 'Visualforce', level: 'Advanced' },
+      { name: 'CTI & Live Agent', level: 'Advanced' },
+      { name: 'Deployment Strategies', level: 'Advanced' },
+      { name: 'Code Review', level: 'Advanced' },
+      { name: 'Agentforce', level: 'Advanced' },
+      { name: 'Einstein Copilot', level: 'Advanced' },
+      { name: 'Einstein GPT', level: 'Advanced' },
+      { name: 'Prompt Builder', level: 'Advanced' },
+      { name: 'Model Builder', level: 'Intermediate' },
+      { name: 'Einstein Prediction Builder', level: 'Intermediate' },
+      { name: 'Einstein Next Best Action', level: 'Intermediate' },
+      { name: 'Einstein Bots', level: 'Advanced' },
+      { name: 'Einstein Analytics', level: 'Intermediate' },
+      { name: 'Einstein Vision & Language', level: 'Intermediate' },
+      { name: 'Data Cloud', level: 'Intermediate' },
+    ],
+  },
 ]
 
-const CERTS = [
-  'Salesforce Certified Data 360 Consultant',
-  'Salesforce Certified Omnistudio Developer',
-  'Salesforce Certified Sales Cloud Consultant',
-  'Salesforce Certified Platform Administrator',
-  'Salesforce Certified Platform Administrator II',
-  'Salesforce Certified Platform App Builder',
-  'Salesforce Certified Platform Developer',
-  'Salesforce Certified Platform Developer II',
-  'Salesforce Certified JavaScript Developer',
-  'Salesforce Certified Platform Data Architect',
-  'Salesforce Certified Platform Integration Architect',
-  'Salesforce Certified Field Service Consultant',
-  'Salesforce Certified Service Cloud Consultant',
+const CERT_GROUPS = [
+  {
+    category: 'Salesforce',
+    color: '#00a1e0',
+    certs: [
+      'Salesforce Certified JavaScript Developer',
+      'Salesforce Certified Platform Developer',
+      'Salesforce Certified Platform Developer II',
+      'Salesforce Certified Platform Administrator',
+      'Salesforce Certified Platform Administrator II',
+      'Salesforce Certified Platform App Builder',
+      'Salesforce Certified Platform Data Architect',
+      'Salesforce Certified Platform Integration Architect',
+      'Salesforce Certified Omnistudio Developer',
+      'Salesforce Certified Sales Cloud Consultant',
+      'Salesforce Certified Service Cloud Consultant',
+      'Salesforce Certified Field Service Consultant',
+      'Salesforce Certified Data 360 Consultant',
+    ],
+  },
 ]
 
 const cardVariants = {
@@ -102,32 +123,51 @@ export default function About() {
 
           <Section>
             <SectionLabel>Skills</SectionLabel>
-            <SkillsGrid>
-              {SKILLS.map((skill, i) => (
-                <motion.div
-                  key={skill.name}
-                  custom={i}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: '-40px' }}
-                  variants={cardVariants}
-                >
-                  <SkillCard>
-                    <SkillName>{skill.name}</SkillName>
-                    <SkillLevel>{skill.level}</SkillLevel>
-                  </SkillCard>
-                </motion.div>
-              ))}
-            </SkillsGrid>
+            {SKILL_GROUPS.map((group) => (
+              <CategoryGroup key={group.category}>
+                <CategoryLabel $color={group.color}>{group.category}</CategoryLabel>
+                <SkillsGrid>
+                  {group.skills.map((skill, i) => (
+                    <motion.div
+                      key={skill.name}
+                      custom={i}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, margin: '-40px' }}
+                      variants={cardVariants}
+                    >
+                      <SkillCard $color={group.color}>
+                        <SkillName>{skill.name}</SkillName>
+                        <SkillLevel>{skill.level}</SkillLevel>
+                      </SkillCard>
+                    </motion.div>
+                  ))}
+                </SkillsGrid>
+              </CategoryGroup>
+            ))}
           </Section>
 
           <Section>
             <SectionLabel>Certifications</SectionLabel>
-            <CertsRow>
-              {CERTS.map((cert) => (
-                <CertBadge key={cert}>{cert}</CertBadge>
-              ))}
-            </CertsRow>
+            {CERT_GROUPS.map((group) => (
+              <CategoryGroup key={group.category}>
+                <CategoryLabel $color={group.color}>{group.category}</CategoryLabel>
+                <CertsRow>
+                  {group.certs.map((cert, i) => (
+                    <motion.div
+                      key={cert}
+                      custom={i}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, margin: '-40px' }}
+                      variants={cardVariants}
+                    >
+                      <CertBadge $color={group.color}>{cert}</CertBadge>
+                    </motion.div>
+                  ))}
+                </CertsRow>
+              </CategoryGroup>
+            ))}
           </Section>
         </Container>
       </Wrapper>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import {
   Wrapper,
@@ -9,12 +10,13 @@ import {
   Letter,
   Tagline,
   HeroPreviewZone,
+  BioCentered,
   MarqueeRow,
   MarqueeInner,
   MarqueeWord,
 } from './Home.styles'
-import ProjectsPreview from '../../components/SectionPanels/previews/ProjectsPreview'
-import ExperiencePreview from '../../components/SectionPanels/previews/ExperiencePreview'
+import ProjectsCanvas from '../../components/SectionPanels/canvases/ProjectsCanvas'
+import ExperienceCanvas from '../../components/SectionPanels/canvases/ExperienceCanvas'
 import CreativeCanvas from '../../components/SectionPanels/canvases/CreativeCanvas'
 
 const NAME = 'Amrit Das'
@@ -24,10 +26,17 @@ const SECTIONS = [
   { id: 'creative',   label: 'CREATIVE',   to: '/creative',   accent: '#ff375f' },
 ]
 
+const BIO_WORDS = (
+  'I build web applications and agentic workflows — clean systems that cut through complexity. ' +
+  'Eight years on the Salesforce platform keeps me grounded in what actually works.'
+).split(' ')
+
 export default function Home() {
   const lettersRef = useRef([])
   const taglineRef = useRef(null)
   const [hoveredSection, setHoveredSection] = useState(null)
+  const [hoveredName, setHoveredName] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const tl = gsap.timeline({ delay: 0.2 })
@@ -47,8 +56,17 @@ export default function Home() {
   return (
     <Wrapper>
       <Hero>
-        <NameBlock>
-          <NameHeading aria-label={NAME}>
+        <NameBlock
+          onMouseEnter={() => setHoveredName(true)}
+          onMouseLeave={() => setHoveredName(false)}
+          onClick={() => {
+            setHoveredSection(null)
+            setHoveredName(false)
+            navigate('/', { replace: true })
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
+          <NameHeading aria-label={NAME} $dimmed={hoveredName}>
             {NAME.split('').map((char, i) => (
               <Letter key={i} ref={(el) => (lettersRef.current[i] = el)} style={{ opacity: 0 }}>
                 {char === ' ' ? '\u00A0' : char}
@@ -56,40 +74,69 @@ export default function Home() {
             ))}
           </NameHeading>
           <Tagline ref={taglineRef} style={{ opacity: 0 }}>
-            Salesforce Developer &middot; Builder &middot; AI
+            Web Development &middot; Agentic Workflows &middot; Salesforce
           </Tagline>
         </NameBlock>
 
         <HeroPreviewZone>
+          {/* Bio — visible by default, fades out when a section is hovered */}
+          <motion.div
+            animate={{ opacity: hoveredSection ? 0 : 1, y: hoveredSection ? 6 : 0 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 52px', maxWidth: 740, pointerEvents: 'none' }}
+          >
+            <BioCentered>
+              {BIO_WORDS.map((word, i) => (
+                <motion.span
+                  key={i}
+                  animate={
+                    hoveredName
+                      ? { y: -5 }
+                      : { y: 0 }
+                  }
+                  transition={
+                    hoveredName
+                      ? { duration: 1.4, delay: i * 0.05, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
+                      : { duration: 0.4, ease: 'easeOut' }
+                  }
+                  style={{ display: 'inline-block', marginRight: '0.28em' }}
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </BioCentered>
+          </motion.div>
+
+          {/* Canvas animations — appear on section hover */}
           <AnimatePresence mode="wait">
             {hoveredSection === 'projects' && (
               <motion.div
                 key="projects"
-                style={{ position: 'absolute', inset: 0 }}
+                style={{ position: 'absolute', inset: 0, zIndex: 2 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
               >
-                <ProjectsPreview isHovered accent="#0071e3" />
+                <ProjectsCanvas isHovered />
               </motion.div>
             )}
             {hoveredSection === 'experience' && (
               <motion.div
                 key="experience"
-                style={{ position: 'absolute', inset: 0 }}
+                style={{ position: 'absolute', inset: 0, zIndex: 2 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
               >
-                <ExperiencePreview isHovered accent="#34c759" />
+                <ExperienceCanvas isHovered />
               </motion.div>
             )}
             {hoveredSection === 'creative' && (
               <motion.div
                 key="creative"
-                style={{ position: 'absolute', inset: 0 }}
+                style={{ position: 'absolute', inset: 0, zIndex: 2 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

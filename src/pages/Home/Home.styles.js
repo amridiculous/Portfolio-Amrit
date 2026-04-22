@@ -16,6 +16,7 @@ export const Hero = styled.section`
 export const NameBlock = styled.div`
   padding: 28px 52px 0;
   overflow: hidden;
+  cursor: pointer;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: 24px 28px 0;
@@ -27,7 +28,8 @@ export const NameHeading = styled.h1`
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 1.0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ $dimmed, theme }) => $dimmed ? 'rgba(0,0,0,0.38)' : theme.colors.text};
+  transition: color 0.25s ease;
   white-space: nowrap;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
@@ -48,10 +50,21 @@ export const Tagline = styled.p`
   margin-top: 14px;
 `
 
+export const BioCentered = styled.p`
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.018em;
+  color: ${({ theme }) => theme.colors.text};
+`
+
 export const HeroPreviewZone = styled.div`
   flex: 1;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 export const MarqueeRow = styled.div`

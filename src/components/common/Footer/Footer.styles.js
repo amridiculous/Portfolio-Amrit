@@ -1,25 +1,14 @@
 import styled from 'styled-components'
 
 export const Foot = styled.footer`
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
   padding: 28px 0;
-  background: ${({ theme }) => theme.colors.surface};
+  background: ${({ theme }) => theme.colors.bg};
 `
 
 export const Inner = styled.div`
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 0 22px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  justify-content: center;
 `
 
 export const Copy = styled.p`

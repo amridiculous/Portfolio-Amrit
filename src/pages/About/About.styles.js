@@ -39,7 +39,7 @@ export const SectionLabel = styled.h2`
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.text};
   margin-bottom: 24px;
 `
 
@@ -56,6 +56,25 @@ export const BioText = styled.p`
   letter-spacing: -0.008em;
 `
 
+export const CategoryGroup = styled.div`
+  margin-bottom: 36px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`
+
+export const CategoryLabel = styled.h3`
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: ${({ $color }) => $color || 'inherit'};
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid ${({ $color }) => $color ? `${$color}30` : 'transparent'};
+`
+
 export const SkillsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -67,6 +86,7 @@ export const SkillCard = styled.div`
   border-radius: ${({ theme }) => theme.radii.md};
   padding: 18px 20px;
   border: 1px solid ${({ theme }) => theme.colors.border};
+  border-top: 2px solid ${({ $color }) => $color ? `${$color}55` : 'transparent'};
   transition: background ${({ theme }) => theme.transitions.fast};
 
   &:hover {
@@ -77,7 +97,7 @@ export const SkillCard = styled.div`
 export const SkillName = styled.p`
   font-size: 15px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.textSecondary};
   letter-spacing: -0.01em;
   margin-bottom: 4px;
 `
@@ -88,18 +108,25 @@ export const SkillLevel = styled.p`
 `
 
 export const CertsRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 10px;
 `
 
-export const CertBadge = styled.span`
+export const CertBadge = styled.div`
+  background: ${({ theme }) => theme.colors.surface};
+  border-radius: ${({ theme }) => theme.radii.md};
+  padding: 18px 20px;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-top: 2px solid ${({ $color }) => $color ? `${$color}55` : 'transparent'};
   font-size: 13px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.accent};
-  background: rgba(0, 113, 227, 0.07);
-  border: 1px solid rgba(0, 113, 227, 0.18);
-  border-radius: ${({ theme }) => theme.radii.full};
-  padding: 6px 14px;
-  letter-spacing: -0.008em;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  transition: background ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.surfaceHover};
+  }
 `

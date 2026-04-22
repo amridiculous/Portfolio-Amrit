@@ -26,11 +26,11 @@ export const Inner = styled.div`
 `
 
 export const LogoLink = styled(Link)`
-  font-family: 'Satisfy', cursive;
+  font-family: ${({ theme }) => theme.fonts.base};
   font-size: 26px;
-  font-weight: 400;
+  font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
-  letter-spacing: 0;
+  letter-spacing: -0.045em;
   line-height: 1;
   transition: opacity 0.2s ease;
 
@@ -59,6 +59,31 @@ export const NavLinkItem = styled(Link)`
 
   &:hover {
     opacity: 0.55;
+  }
+`
+
+export const NavSocials = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 28px;
+  padding-left: 28px;
+  border-left: 1px solid ${({ theme }) => theme.colors.border};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: none;
+  }
+`
+
+export const SocialIconLink = styled.a`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.text};
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 1;
   }
 `
 

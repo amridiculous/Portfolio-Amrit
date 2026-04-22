@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import PageTransition from '../../components/common/PageTransition'
 import {
@@ -5,11 +6,6 @@ import {
   Container,
   PageTitle,
   Subtitle,
-  ContactGrid,
-  ContactInfo,
-  InfoItem,
-  InfoLabel,
-  InfoLink,
   Form,
   FormGroup,
   Label,
@@ -17,6 +13,7 @@ import {
   Textarea,
   SubmitButton,
   FormNote,
+  SuccessMessage,
 } from './Contact.styles'
 
 const fadeUp = {
@@ -29,10 +26,28 @@ const fadeUp = {
 }
 
 export default function Contact() {
-  const handleSubmit = (e) => {
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: wire up to EmailJS, Formspree, or your preferred service
-    alert('Message sent! Connect this to your preferred email service.')
+    setStatus('sending')
+    const data = new FormData(e.target)
+
+    try {
+      const res = await fetch('https://formspree.io/f/xyzgpvkj', {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      })
+      if (res.ok) {
+        setStatus('success')
+        e.target.reset()
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -45,84 +60,56 @@ export default function Contact() {
             I'd love to hear from you.
           </Subtitle>
 
-          <ContactGrid>
-            {/* Left — contact details */}
-            <motion.div
-              custom={0}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-            >
-              <ContactInfo>
-                <InfoItem>
-                  <InfoLabel>Email</InfoLabel>
-                  {/* ── Replace with your email ── */}
-                  <InfoLink href="mailto:your@email.com">your@email.com</InfoLink>
-                </InfoItem>
+          <motion.div
+            custom={0}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+          >
+            <Form onSubmit={handleSubmit}>
+              <FormGroup>
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" name="name" type="text" placeholder="Your name" required />
+              </FormGroup>
 
-                <InfoItem>
-                  <InfoLabel>LinkedIn</InfoLabel>
-                  {/* ── Replace with your LinkedIn URL ── */}
-                  <InfoLink
-                    href="https://linkedin.com/in/yourprofile"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    linkedin.com/in/yourprofile
-                  </InfoLink>
-                </InfoItem>
+              <FormGroup>
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" name="email" type="email" placeholder="your@email.com" required />
+              </FormGroup>
 
-                <InfoItem>
-                  <InfoLabel>Location</InfoLabel>
-                  {/* ── Replace with your location ── */}
-                  <InfoLink as="span">India</InfoLink>
-                </InfoItem>
-              </ContactInfo>
-            </motion.div>
+              <FormGroup>
+                <Label htmlFor="message">Message</Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  placeholder="Tell me about your project..."
+                  required
+                />
+              </FormGroup>
 
-            {/* Right — contact form */}
-            <motion.div
-              custom={0.1}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-            >
-              <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" type="text" placeholder="Your name" required />
-                </FormGroup>
+              <SubmitButton
+                type="submit"
+                disabled={status === 'sending'}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              >
+                {status === 'sending' ? 'Sending…' : 'Send message'}
+              </SubmitButton>
 
-                <FormGroup>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="your@email.com" required />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    rows={5}
-                    placeholder="Tell me about your project..."
-                    required
-                  />
-                </FormGroup>
-
-                <SubmitButton
-                  type="submit"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                >
-                  Send message
-                </SubmitButton>
-
+              {status === 'success' && (
+                <SuccessMessage>Message sent — I'll be in touch soon.</SuccessMessage>
+              )}
+              {status === 'error' && (
+                <FormNote style={{ color: '#ff3b30' }}>Something went wrong. Please try again.</FormNote>
+              )}
+              {status === 'idle' && (
                 <FormNote>I typically respond within 24 hours.</FormNote>
-              </Form>
-            </motion.div>
-          </ContactGrid>
+              )}
+            </Form>
+          </motion.div>
         </Container>
       </Wrapper>
     </PageTransition>
