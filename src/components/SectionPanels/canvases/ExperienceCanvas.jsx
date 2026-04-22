@@ -49,7 +49,6 @@ export default function ExperienceCanvas({ isHovered }) {
       prevHoveredRef.current = hovering
 
       s.globalProgress = lerp(s.globalProgress, hovering ? 1 : 0, hovering ? 0.04 : 0.055)
-
       if (s.globalProgress < 0.004) { s.raf = requestAnimationFrame(draw); return }
 
       s.time += 0.012
@@ -93,6 +92,12 @@ export default function ExperienceCanvas({ isHovered }) {
   }, [])
 
   return (
-    <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+      <canvas
+        ref={canvasRef}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      />
+
+    </div>
   )
 }

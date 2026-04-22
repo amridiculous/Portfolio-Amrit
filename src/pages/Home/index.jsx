@@ -27,11 +27,11 @@ const SECTIONS = [
 ]
 
 const AUTO_SEQUENCE = [
-  { section: 'projects',   duration: 2500 },
+  { section: 'projects',   duration: 4000 },
   { section: null,         duration: 4500 },
-  { section: 'experience', duration: 2500 },
+  { section: 'experience', duration: 4000 },
   { section: null,         duration: 4500 },
-  { section: 'creative',   duration: 2500 },
+  { section: 'creative',   duration: 4000 },
   { section: null,         duration: 4500 },
 ]
 
@@ -78,6 +78,8 @@ function pickDifferentRandom(current, max) {
 export default function Home() {
   const lettersRef = useRef([])
   const taglineRef = useRef(null)
+  const heroZoneRef = useRef(null)
+  const marqueeWordsRef = useRef([])
   const isHoveringRef = useRef(false)
   const [hoveredSection, setHoveredSection] = useState(null)
   const [hoveredName, setHoveredName] = useState(false)
@@ -101,6 +103,16 @@ export default function Home() {
       { y: 14, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' },
       '-=0.4'
+    ).fromTo(
+      heroZoneRef.current,
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
+      '-=0.6'
+    ).fromTo(
+      marqueeWordsRef.current.filter(Boolean),
+      { yPercent: 80, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 0.35, stagger: 0.05, ease: 'power3.out' },
+      '-=0.35'
     )
     return () => tl.kill()
   }, [])
@@ -122,7 +134,7 @@ export default function Home() {
     if (!hoveredSection || !jokesEnabled) return
     const t = setTimeout(() => {
       setActiveBioIdx(prev => pickDifferentRandom(prev, FUNNY_BIOS.length))
-    }, 600)
+    }, 1500)
     return () => clearTimeout(t)
   }, [hoveredSection, jokesEnabled])
 
@@ -141,7 +153,7 @@ export default function Home() {
       timeoutId = setTimeout(step, entry.duration)
     }
 
-    timeoutId = setTimeout(step, 800)
+    timeoutId = setTimeout(step, 3500)
     return () => {
       cancelled = true
       clearTimeout(timeoutId)
@@ -168,7 +180,7 @@ export default function Home() {
           </Tagline>
         </NameBlock>
 
-        <HeroPreviewZone>
+        <HeroPreviewZone ref={heroZoneRef} style={{ opacity: 0 }}>
           <motion.div
             animate={{ opacity: hoveredSection ? 0 : 1 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
@@ -220,9 +232,11 @@ export default function Home() {
 
         <MarqueeRow>
           <MarqueeInner>
-            {SECTIONS.map(({ id, label, to, accent }) => (
+            {SECTIONS.map(({ id, label, to, accent }, i) => (
               <MarqueeWord
                 key={id}
+                ref={el => (marqueeWordsRef.current[i] = el)}
+                style={{ opacity: 0 }}
                 to={to}
                 $accent={accent}
                 $hovered={hoveredSection === id}

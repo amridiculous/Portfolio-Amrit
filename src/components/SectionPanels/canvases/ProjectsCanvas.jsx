@@ -1,8 +1,62 @@
 import { useRef, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const COLOR = '#0071e3'
 const NODE_COUNT = 24
 const CONNECT_DIST = 140
+
+const RADIUS = 220
+
+const PROJ_CARDS = [
+  {
+    title: 'Agentforce Service Automation',
+    desc: 'Autonomous AI agent that triages, routes, and resolves Tier-1 support cases without human intervention — cutting average handle time by 40%.',
+    tags: ['Agentforce', 'Einstein Copilot', 'Service Cloud', 'Apex'],
+    badge: 'AI', delay: 0.0,
+  },
+  {
+    title: 'Field Service Lightning',
+    desc: 'Replaced ageing work-order system with FSL, building custom LWC mobile components for 200+ field technicians across three regions.',
+    tags: ['Field Service Lightning', 'LWC', 'Apex', 'Service Cloud'],
+    badge: 'Featured', delay: 0.1,
+  },
+  {
+    title: 'ERP–Salesforce Integration',
+    desc: 'Real-time bi-directional sync between Salesforce and SAP via REST APIs and Platform Events, processing 50k+ records daily with zero data loss.',
+    tags: ['Apex', 'REST API', 'Platform Events', 'SAP'],
+    badge: null, delay: 0.2,
+  },
+  {
+    title: 'Einstein Next Best Action',
+    desc: 'AI-driven recommendation engine surfacing upsell prompts and churn-risk flags directly on opportunity records, improving win rate by 18%.',
+    tags: ['Einstein Next Best Action', 'Einstein GPT', 'Sales Cloud', 'Apex'],
+    badge: 'AI', delay: 0.3,
+  },
+  {
+    title: 'LWC Component Library',
+    desc: 'Reusable production component library — data tables, multi-step forms, and modals — deployed across six orgs and adopted by four dev teams.',
+    tags: ['LWC', 'JavaScript', 'SLDS', 'Jest', 'Salesforce DX'],
+    badge: null, delay: 0.4,
+  },
+  {
+    title: 'Omni-Channel Service Cloud',
+    desc: 'Unified CTI, Live Agent, and Einstein Bot routing layer handling 300+ concurrent agents with intelligent queue prioritisation and fallback flows.',
+    tags: ['Service Cloud', 'CTI', 'Live Agent', 'Einstein Bots'],
+    badge: null, delay: 0.5,
+  },
+  {
+    title: 'Data Cloud Unified Profile',
+    desc: 'Stitched customer identities across five data sources into a single Data Cloud profile, powering personalised Einstein GPT marketing journeys.',
+    tags: ['Data Cloud', 'Einstein GPT', 'Salesforce Flow', 'Marketing Cloud'],
+    badge: 'AI', delay: 0.6,
+  },
+  {
+    title: 'CI/CD Pipeline',
+    desc: 'End-to-end GitHub Actions pipeline with Apex test gates, PMD static analysis, and automated scratch-org deployment — reducing release cycle from weeks to hours.',
+    tags: ['Salesforce DX', 'GitHub Actions', 'CI/CD', 'Apex', 'DevOps'],
+    badge: null, delay: 0.7,
+  },
+]
 
 function lerp(a, b, t) { return a + (b - a) * t }
 
@@ -111,6 +165,94 @@ export default function ProjectsCanvas({ isHovered }) {
   }, [])
 
   return (
-    <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
+    <div style={{ position: 'absolute', inset: 0 }}>
+      <canvas
+        ref={canvasRef}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      />
+
+      <AnimatePresence>
+        {isHovered && PROJ_CARDS.map((card, i) => {
+          const angle = (2 * Math.PI * i) / PROJ_CARDS.length - Math.PI / 2
+          const tx = RADIUS * Math.cos(angle)
+          const ty = RADIUS * Math.sin(angle)
+          const floatY = 10 + (i % 3) * 4
+          const dur = 4.8 + (i % 4) * 0.5
+          return (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                left: `calc(50% + ${tx}px)`,
+                top: `calc(50% + ${ty}px)`,
+                transform: 'translate(-50%, -50%)',
+                width: '11%',
+                zIndex: 10,
+              }}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.82 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.82 }}
+                transition={{ duration: 0.8, delay: card.delay, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <motion.div
+                  animate={{ y: [0, -floatY, 0] }}
+                  transition={{ duration: dur, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+                  style={{
+                    background: 'rgba(248,247,243,0.97)',
+                    border: `1px solid rgba(0,0,0,0.07)`,
+                    borderTop: `3px solid ${COLOR}`,
+                    borderRadius: 10,
+                    padding: '10px 11px',
+                    boxShadow: '0 6px 20px rgba(0,0,0,0.12)',
+                    aspectRatio: '1',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {card.badge && (
+                    <div style={{
+                      fontSize: 8, fontWeight: 700, letterSpacing: '0.07em',
+                      textTransform: 'uppercase', color: COLOR, marginBottom: 4,
+                    }}>
+                      {card.badge}
+                    </div>
+                  )}
+                  <div style={{
+                    fontSize: 16.5, fontWeight: 700, color: '#1d1d1f',
+                    lineHeight: 1.3, marginBottom: 5,
+                  }}>
+                    {card.title}
+                  </div>
+                  <div style={{
+                    fontSize: 13.5, color: '#3a3a3c', lineHeight: 1.55,
+                    flex: 1, overflow: 'hidden',
+                  }}>
+                    {card.desc}
+                  </div>
+                  <div style={{
+                    display: 'flex', flexWrap: 'wrap', gap: 3, marginTop: 6,
+                    borderTop: '1px solid rgba(0,0,0,0.07)', paddingTop: 5,
+                  }}>
+                    {card.tags.map(tag => (
+                      <span key={tag} style={{
+                        fontSize: 7.5, color: '#6e6e73',
+                        border: '1px solid rgba(0,0,0,0.13)',
+                        padding: '1px 5px', borderRadius: 20,
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          )
+        })}
+      </AnimatePresence>
+    </div>
   )
 }
