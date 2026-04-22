@@ -210,7 +210,7 @@ export default function Home() {
               <motion.div key="projects" style={{ position: 'absolute', inset: 0, zIndex: 2 }}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}>
-                <ProjectsCanvas isHovered />
+                <ProjectsCanvas isHovered isMobile={isMobile} />
               </motion.div>
             )}
             {hoveredSection === 'experience' && (
@@ -224,7 +224,7 @@ export default function Home() {
               <motion.div key="creative" style={{ position: 'absolute', inset: 0, zIndex: 2 }}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}>
-                <CreativeCanvas isHovered />
+                <CreativeCanvas isHovered isMobile={isMobile} />
               </motion.div>
             )}
           </AnimatePresence>

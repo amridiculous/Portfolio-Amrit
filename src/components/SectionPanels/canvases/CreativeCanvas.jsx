@@ -68,7 +68,7 @@ function generateStrokes(w, h) {
   })
 }
 
-export default function CreativeCanvas({ isHovered }) {
+export default function CreativeCanvas({ isHovered, isMobile }) {
   const canvasRef = useRef(null)
   const stateRef = useRef({ raf: null, globalProgress: 0, strokes: [] })
   const isHoveredRef = useRef(isHovered)
@@ -153,7 +153,7 @@ export default function CreativeCanvas({ isHovered }) {
       />
 
       <AnimatePresence>
-        {isHovered && PHOTOS.map((photo, i) => {
+        {isHovered && !isMobile && PHOTOS.map((photo, i) => {
           const angle = (2 * Math.PI * i) / PHOTOS.length - Math.PI / 2
           const tx = RADIUS * Math.cos(angle)
           const ty = RADIUS * Math.sin(angle)

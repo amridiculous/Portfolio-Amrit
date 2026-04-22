@@ -70,7 +70,7 @@ function makeNodes(w, h) {
   }))
 }
 
-export default function ProjectsCanvas({ isHovered }) {
+export default function ProjectsCanvas({ isHovered, isMobile }) {
   const canvasRef = useRef(null)
   const stateRef = useRef({ raf: null, nodes: [], globalProgress: 0, speedMult: 1 })
   const isHoveredRef = useRef(isHovered)
@@ -172,7 +172,7 @@ export default function ProjectsCanvas({ isHovered }) {
       />
 
       <AnimatePresence>
-        {isHovered && PROJ_CARDS.map((card, i) => {
+        {isHovered && !isMobile && PROJ_CARDS.map((card, i) => {
           const angle = (2 * Math.PI * i) / PROJ_CARDS.length - Math.PI / 2
           const tx = RADIUS * Math.cos(angle)
           const ty = RADIUS * Math.sin(angle)
