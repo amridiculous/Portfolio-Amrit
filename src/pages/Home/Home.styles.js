@@ -8,13 +8,13 @@ export const Wrapper = styled.main`
 export const Hero = styled.section`
   min-height: 100vh;
   min-height: 100dvh;
-  padding-top: 64px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-top: -64px;
     height: 100dvh;
     min-height: unset;
   }
@@ -26,7 +26,11 @@ export const NameBlock = styled.div`
   cursor: pointer;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: 76px 24px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 14px 24px 0;
   }
 `
 

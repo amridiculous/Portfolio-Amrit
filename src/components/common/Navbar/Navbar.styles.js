@@ -10,6 +10,11 @@ export const NavBar = styled.header`
   height: 64px;
   background: transparent;
   transition: background 0.3s ease;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    position: sticky;
+    background: transparent;
+  }
 `
 
 export const Inner = styled.div`
@@ -128,21 +133,27 @@ export const Hamburger = styled.button`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: flex;
+    margin-left: auto;
   }
 `
 
 export const MobileNav = styled.div`
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1001;
-  background: ${({ theme }) => theme.colors.bg};
-  padding: 8px 24px 40px;
+  display: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    overflow: hidden;
+    background: ${({ theme }) => theme.colors.bg};
+    z-index: 999;
+  }
+`
+
+export const MobileNavInner = styled.div`
+  padding: 32px 24px 40px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
 `
 
 export const MobileLinkItem = styled(Link)`

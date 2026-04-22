@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import gsap from 'gsap'
 import {
   NavBar,
   Inner,
-  LogoBlock,
   LogoLink,
-  NavTagline,
   Links,
   NavLinkItem,
   NavSocials,
   SocialIconLink,
   Hamburger,
   MobileNav,
+  MobileNavInner,
   MobileLinkItem,
 } from './Navbar.styles'
 
@@ -56,21 +55,51 @@ const SOCIALS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
+  const menuRef = useRef(null)
+  const itemRefs = useRef([])
 
   useEffect(() => {
     setOpen(false)
+    if (menuRef.current) {
+      gsap.killTweensOf(menuRef.current)
+      gsap.set(menuRef.current, { height: 0 })
+    }
   }, [location.pathname])
+
+  useEffect(() => {
+    const menu = menuRef.current
+    if (!menu) return
+
+    const items = itemRefs.current.filter(Boolean)
+
+    if (open) {
+      gsap.killTweensOf(menu)
+      gsap.killTweensOf(items)
+      gsap.set(items, { y: -14, opacity: 0 })
+      gsap.to(menu, { height: menu.scrollHeight, duration: 0.45, ease: 'power3.inOut' })
+      gsap.to(items, {
+        y: 0,
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.065,
+        ease: 'power3.out',
+        delay: 0.15,
+      })
+    } else {
+      gsap.killTweensOf(menu)
+      gsap.killTweensOf(items)
+      gsap.to(items, { y: -10, opacity: 0, duration: 0.2, stagger: 0.04, ease: 'power2.in' })
+      gsap.to(menu, { height: 0, duration: 0.38, ease: 'power3.inOut', delay: 0.12 })
+    }
+  }, [open])
 
   return (
     <>
       <NavBar>
         <Inner>
-          <LogoBlock>
+          {location.pathname !== '/' && (
             <LogoLink to="/">Amrit Das</LogoLink>
-            {location.pathname === '/' && (
-              <NavTagline>Web Development · Agentic Workflows · Salesforce</NavTagline>
-            )}
-          </LogoBlock>
+          )}
 
           <Links>
             {NAV_ITEMS.map(({ label, path }) => (
@@ -88,7 +117,7 @@ export default function Navbar() {
             ))}
           </NavSocials>
 
-          <Hamburger onClick={() => setOpen(!open)} aria-label="Toggle navigation menu">
+          <Hamburger onClick={() => setOpen(prev => !prev)} aria-label="Toggle navigation menu">
             <span />
             <span />
             <span />
@@ -96,31 +125,26 @@ export default function Navbar() {
         </Inner>
       </NavBar>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+      <MobileNav ref={menuRef}>
+        <MobileNavInner>
+          {NAV_ITEMS.map(({ label, path }, i) => (
+            <MobileLinkItem key={path} to={path} ref={el => (itemRefs.current[i] = el)}>
+              {label}
+            </MobileLinkItem>
+          ))}
+          <MobileLinkItem
+            as="div"
+            ref={el => (itemRefs.current[NAV_ITEMS.length] = el)}
+            style={{ display: 'flex', gap: '20px', paddingTop: '12px' }}
           >
-            <MobileNav>
-              {NAV_ITEMS.map(({ label, path }) => (
-                <MobileLinkItem key={path} to={path}>
-                  {label}
-                </MobileLinkItem>
-              ))}
-              <MobileLinkItem as="div" style={{ display: 'flex', gap: '20px', paddingTop: '12px' }}>
-                {SOCIALS.map(({ label, href, icon }) => (
-                  <SocialIconLink key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
-                    {icon}
-                  </SocialIconLink>
-                ))}
-              </MobileLinkItem>
-            </MobileNav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {SOCIALS.map(({ label, href, icon }) => (
+              <SocialIconLink key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+                {icon}
+              </SocialIconLink>
+            ))}
+          </MobileLinkItem>
+        </MobileNavInner>
+      </MobileNav>
     </>
   )
 }
