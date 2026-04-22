@@ -7,10 +7,17 @@ export const Wrapper = styled.main`
 
 export const Hero = styled.section`
   min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: 64px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    height: 100dvh;
+    min-height: unset;
+  }
 `
 
 export const NameBlock = styled.div`
@@ -19,7 +26,7 @@ export const NameBlock = styled.div`
   cursor: pointer;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: 88px 28px 0;
+    padding: 76px 24px 0;
   }
 `
 
@@ -32,9 +39,10 @@ export const NameHeading = styled.h1`
   transition: color 0.25s ease;
   white-space: nowrap;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: clamp(40px, 11vw, 64px);
     white-space: normal;
-    line-height: 1.08;
+    line-height: 1.05;
   }
 `
 
@@ -48,6 +56,11 @@ export const Tagline = styled.p`
   color: ${({ theme }) => theme.colors.textSecondary};
   letter-spacing: 0.005em;
   margin-top: 14px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-top: 6px;
+    font-size: 12px;
+  }
 `
 
 export const BioCentered = styled.p`
@@ -56,6 +69,11 @@ export const BioCentered = styled.p`
   line-height: 1.65;
   letter-spacing: -0.018em;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 14px;
+    line-height: 1.55;
+  }
 `
 
 export const HeroPreviewZone = styled.div`
@@ -72,7 +90,7 @@ export const MarqueeRow = styled.div`
   padding-bottom: 28px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-bottom: 24px;
+    padding-bottom: 16px;
   }
 `
 

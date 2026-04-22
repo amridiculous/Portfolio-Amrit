@@ -1,14 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
-import gsap from 'gsap'
 import {
   Wrapper,
   Hero,
-  NameBlock,
-  NameHeading,
-  Letter,
-  Tagline,
   HeroPreviewZone,
   BioCentered,
   MarqueeRow,
@@ -20,7 +14,6 @@ import ExperienceCanvas from '../../components/SectionPanels/canvases/Experience
 import CreativeCanvas from '../../components/SectionPanels/canvases/CreativeCanvas'
 import AmbientCanvas from '../../components/SectionPanels/canvases/AmbientCanvas'
 
-const NAME = 'Amrit Das'
 const SECTIONS = [
   { id: 'projects',   label: 'PROJECTS',   to: '/projects',   accent: '#0071e3' },
   { id: 'experience', label: 'EXPERIENCE', to: '/experience', accent: '#34c759' },
@@ -36,33 +29,11 @@ const MOBILE_SEQUENCE = [
   { section: null,         duration: 2000 },
 ]
 
-const BIO_WORDS = (
-  'I build web applications and agentic workflows — clean systems that cut through complexity. ' +
-  'Design matters as much to me as the code behind it.'
-).split(' ')
+const BIO = 'I build web applications and agentic workflows — clean systems that cut through complexity. Design matters as much to me as the code behind it.'
 
 export default function Home() {
-  const lettersRef = useRef([])
-  const taglineRef = useRef(null)
   const [hoveredSection, setHoveredSection] = useState(null)
-  const [hoveredName, setHoveredName] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.2 })
-    tl.fromTo(
-      lettersRef.current,
-      { yPercent: 120, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.04, ease: 'power4.out' }
-    ).fromTo(
-      taglineRef.current,
-      { y: 14, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' },
-      '-=0.4'
-    )
-    return () => tl.kill()
-  }, [])
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
@@ -98,29 +69,6 @@ export default function Home() {
   return (
     <Wrapper>
       <Hero>
-        <NameBlock
-          onMouseEnter={() => setHoveredName(true)}
-          onMouseLeave={() => setHoveredName(false)}
-          onClick={() => {
-            if (isMobile) return
-            setHoveredSection(null)
-            setHoveredName(false)
-            navigate('/', { replace: true })
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
-        >
-          <NameHeading aria-label={NAME} $dimmed={hoveredName}>
-            {NAME.split('').map((char, i) => (
-              <Letter key={i} ref={(el) => (lettersRef.current[i] = el)} style={{ opacity: 0 }}>
-                {char === ' ' ? '\u00A0' : char}
-              </Letter>
-            ))}
-          </NameHeading>
-          <Tagline ref={taglineRef} style={{ opacity: 0 }}>
-            Web Development &middot; Agentic Workflows &middot; Salesforce
-          </Tagline>
-        </NameBlock>
-
         <HeroPreviewZone>
           {/* Ambient animation — always running, fades out on section hover */}
           <motion.div
@@ -131,33 +79,13 @@ export default function Home() {
             <AmbientCanvas />
           </motion.div>
 
-          {/* Bio — visible by default, fades out when a section is hovered */}
+          {/* Bio — fades out when a section is hovered */}
           <motion.div
             animate={{ opacity: hoveredSection ? 0 : 1 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 52px', maxWidth: 740, pointerEvents: 'none' }}
+            style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 24px', maxWidth: 740, pointerEvents: 'none' }}
           >
-            <motion.div
-              animate={{ y: hoveredName ? [0, 200, 0, -200, 0] : 0 }}
-              transition={
-                hoveredName
-                  ? {
-                      duration: 5.7,
-                      repeat: Infinity,
-                      ease: ['easeInOut', 'easeInOut', 'easeInOut', 'easeInOut'],
-                      times: [0, 0.25, 0.5, 0.75, 1],
-                    }
-                  : { duration: 0.8, ease: 'easeInOut' }
-              }
-            >
-              <BioCentered>
-                {BIO_WORDS.map((word, i) => (
-                  <span key={i} style={{ display: 'inline-block', marginRight: '0.28em' }}>
-                    {word}
-                  </span>
-                ))}
-              </BioCentered>
-            </motion.div>
+            <BioCentered>{BIO}</BioCentered>
           </motion.div>
 
           {/* Canvas animations — appear on section hover (desktop) or auto-cycle (mobile) */}

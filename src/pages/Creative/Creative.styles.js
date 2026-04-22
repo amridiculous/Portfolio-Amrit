@@ -50,6 +50,34 @@ export const Subtitle = styled.p`
   max-width: 540px;
 `
 
+export const ProfileLinks = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+`
+
+export const ProfileLink = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  svg {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+    svg { opacity: 1; }
+  }
+`
+
 export const MasonryGrid = styled.div`
   columns: 3;
   column-gap: 20px;

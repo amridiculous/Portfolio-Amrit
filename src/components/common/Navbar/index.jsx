@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   NavBar,
   Inner,
+  LogoBlock,
   LogoLink,
+  NavTagline,
   Links,
   NavLinkItem,
   NavSocials,
@@ -63,11 +65,12 @@ export default function Navbar() {
     <>
       <NavBar>
         <Inner>
-          {location.pathname !== '/' && (
-            <LogoLink to="/" reloadDocument>
-              Amrit Das
-            </LogoLink>
-          )}
+          <LogoBlock>
+            <LogoLink to="/">Amrit Das</LogoLink>
+            {location.pathname === '/' && (
+              <NavTagline>Web Development · Agentic Workflows · Salesforce</NavTagline>
+            )}
+          </LogoBlock>
 
           <Links>
             {NAV_ITEMS.map(({ label, path }) => (

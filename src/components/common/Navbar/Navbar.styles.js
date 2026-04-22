@@ -25,9 +25,16 @@ export const Inner = styled.div`
   }
 `
 
+export const LogoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+`
+
 export const LogoLink = styled(Link)`
   font-family: ${({ theme }) => theme.fonts.base};
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
   letter-spacing: -0.045em;
@@ -36,6 +43,19 @@ export const LogoLink = styled(Link)`
 
   &:hover {
     opacity: 0.6;
+  }
+`
+
+export const NavTagline = styled.p`
+  font-size: 10px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
   }
 `
 
