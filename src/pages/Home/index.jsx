@@ -36,6 +36,11 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
     setIsMobile(mq.matches)
     const handler = (e) => setIsMobile(e.matches)

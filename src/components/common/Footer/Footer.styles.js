@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const Foot = styled.footer`
   padding: 28px 0;
   background: ${({ theme }) => theme.colors.bg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: none;
+  }
 `
 
 export const Inner = styled.div`
