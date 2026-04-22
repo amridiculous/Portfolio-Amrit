@@ -107,7 +107,7 @@ export default function Navbar() {
                   {label}
                 </MobileLinkItem>
               ))}
-              <MobileLinkItem as="div" style={{ display: 'flex', gap: '20px', paddingTop: '4px' }}>
+              <MobileLinkItem as="div" style={{ display: 'flex', gap: '20px', paddingTop: '12px' }}>
                 {SOCIALS.map(({ label, href, icon }) => (
                   <SocialIconLink key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
                     {icon}

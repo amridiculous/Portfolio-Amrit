@@ -18,6 +18,7 @@ import {
 import ProjectsCanvas from '../../components/SectionPanels/canvases/ProjectsCanvas'
 import ExperienceCanvas from '../../components/SectionPanels/canvases/ExperienceCanvas'
 import CreativeCanvas from '../../components/SectionPanels/canvases/CreativeCanvas'
+import AmbientCanvas from '../../components/SectionPanels/canvases/AmbientCanvas'
 
 const NAME = 'Amrit Das'
 const SECTIONS = [
@@ -79,10 +80,19 @@ export default function Home() {
         </NameBlock>
 
         <HeroPreviewZone>
+          {/* Ambient animation — always running, fades out on section hover */}
+          <motion.div
+            animate={{ opacity: hoveredSection ? 0 : 1 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+          >
+            <AmbientCanvas />
+          </motion.div>
+
           {/* Bio — visible by default, fades out when a section is hovered */}
           <motion.div
             animate={{ opacity: hoveredSection ? 0 : 1, y: hoveredSection ? 6 : 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
             style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 52px', maxWidth: 740, pointerEvents: 'none' }}
           >
             <BioCentered>
@@ -108,7 +118,7 @@ export default function Home() {
           </motion.div>
 
           {/* Canvas animations — appear on section hover */}
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             {hoveredSection === 'projects' && (
               <motion.div
                 key="projects"
@@ -116,7 +126,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
               >
                 <ProjectsCanvas isHovered />
               </motion.div>
@@ -128,7 +138,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
               >
                 <ExperienceCanvas isHovered />
               </motion.div>
@@ -140,7 +150,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
               >
                 <CreativeCanvas isHovered />
               </motion.div>
