@@ -17,23 +17,48 @@ import {
   CertBadge,
 } from './About.styles'
 
-// ── Replace with your actual skills ──────────────────────────────────────────
 const SKILLS = [
+  // Core Salesforce
   { name: 'Apex', level: 'Expert' },
   { name: 'Lightning Web Components', level: 'Expert' },
-  { name: 'Salesforce Flow', level: 'Expert' },
+  { name: 'Service Cloud', level: 'Expert' },
+  { name: 'Field Service Lightning', level: 'Expert' },
+  { name: 'Salesforce Flow', level: 'Advanced' },
   { name: 'SOQL / SOSL', level: 'Advanced' },
-  { name: 'Salesforce Integrations', level: 'Advanced' },
-  { name: 'Experience Cloud', level: 'Advanced' },
-  { name: 'JavaScript', level: 'Advanced' },
-  { name: 'REST / SOAP APIs', level: 'Advanced' },
+  { name: 'REST / SOAP Integrations', level: 'Advanced' },
+  { name: 'Visualforce', level: 'Advanced' },
+  { name: 'CTI & Live Agent', level: 'Advanced' },
+  { name: 'Deployment Strategies', level: 'Advanced' },
+  { name: 'Code Review', level: 'Advanced' },
+  { name: 'JavaScript', level: 'Intermediate' },
+  // Salesforce AI
+  { name: 'Agentforce', level: 'Advanced' },
+  { name: 'Einstein Copilot', level: 'Advanced' },
+  { name: 'Einstein GPT', level: 'Advanced' },
+  { name: 'Prompt Builder', level: 'Advanced' },
+  { name: 'Model Builder', level: 'Intermediate' },
+  { name: 'Einstein Prediction Builder', level: 'Intermediate' },
+  { name: 'Einstein Next Best Action', level: 'Intermediate' },
+  { name: 'Einstein Bots', level: 'Advanced' },
+  { name: 'Data Cloud', level: 'Intermediate' },
+  { name: 'Einstein Analytics', level: 'Intermediate' },
+  { name: 'Einstein Vision & Language', level: 'Intermediate' },
 ]
 
-// ── Replace with your actual certifications ───────────────────────────────────
 const CERTS = [
-  'Salesforce Administrator',
-  'Platform Developer I',
-  'Platform Developer II',
+  'Salesforce Certified Data 360 Consultant',
+  'Salesforce Certified Omnistudio Developer',
+  'Salesforce Certified Sales Cloud Consultant',
+  'Salesforce Certified Platform Administrator',
+  'Salesforce Certified Platform Administrator II',
+  'Salesforce Certified Platform App Builder',
+  'Salesforce Certified Platform Developer',
+  'Salesforce Certified Platform Developer II',
+  'Salesforce Certified JavaScript Developer',
+  'Salesforce Certified Platform Data Architect',
+  'Salesforce Certified Platform Integration Architect',
+  'Salesforce Certified Field Service Consultant',
+  'Salesforce Certified Service Cloud Consultant',
 ]
 
 const cardVariants = {
@@ -52,25 +77,25 @@ export default function About() {
         <Container>
           <PageTitle>About.</PageTitle>
           <Subtitle>
-            Salesforce Developer with a focus on scalable architecture
-            and delivering exceptional user experiences.
+            Application Development Specialist at Accenture with 8+ years
+            delivering enterprise Salesforce solutions.
           </Subtitle>
 
           <Section>
             <SectionLabel>Bio</SectionLabel>
             <BioBlock>
               <BioText>
-                I'm Amrit Das, a Salesforce Developer passionate about building
-                robust CRM solutions that help businesses grow. With deep expertise
-                in the Salesforce ecosystem, I specialise in Apex development,
-                Lightning Web Components, and architecting integrations between
-                Salesforce and third-party systems.
+                I'm Amrit Das, a Salesforce specialist with over 8 years of
+                experience building enterprise CRM solutions across Service Cloud,
+                Field Service Lightning, and custom application development. I've
+                progressed from System Engineer to Application Development Specialist,
+                working with clients at Accenture and Tata Consultancy Services.
               </BioText>
-              {/* ── Replace the paragraph below with your own bio ── */}
               <BioText>
-                Currently working at [Your Company]. Previously at [Previous Company].
-                I believe in writing clean, maintainable code and creating solutions
-                that are both technically sound and aligned with business goals.
+                I focus on scalable Apex architecture,
+                Lightning Web Components, and end-to-end deployment strategies. I
+                believe in clean, maintainable code and solutions that are as robust
+                under the hood as they are seamless for the end user.
               </BioText>
             </BioBlock>
           </Section>

@@ -20,15 +20,8 @@ const NAV_ITEMS = [
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const location = useLocation()
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     setOpen(false)
@@ -36,13 +29,17 @@ export default function Navbar() {
 
   return (
     <>
-      <NavBar $scrolled={scrolled}>
+      <NavBar>
         <Inner>
-          <LogoLink to="/">Amrit Das</LogoLink>
+          {location.pathname !== '/' && (
+            <LogoLink to="/" reloadDocument>
+              Amrit Das
+            </LogoLink>
+          )}
 
           <Links>
             {NAV_ITEMS.map(({ label, path }) => (
-              <NavLinkItem key={path} to={path} $active={location.pathname === path}>
+              <NavLinkItem key={path} to={path}>
                 {label}
               </NavLinkItem>
             ))}
@@ -66,11 +63,7 @@ export default function Navbar() {
           >
             <MobileNav>
               {NAV_ITEMS.map(({ label, path }) => (
-                <MobileLinkItem
-                  key={path}
-                  to={path}
-                  $active={location.pathname === path}
-                >
+                <MobileLinkItem key={path} to={path}>
                   {label}
                 </MobileLinkItem>
               ))}

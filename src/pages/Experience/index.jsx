@@ -22,42 +22,53 @@ import {
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ── Replace with your actual experience ──────────────────────────────────────
 const EXPERIENCE = [
   {
-    period: '2023 — Present',
+    period: 'Jun 2025 — Present · 11 mos',
+    role: 'Application Development Specialist',
+    company: 'Accenture · Full-time · Bhubaneswar, Odisha, India',
+    description:
+      'Leading application development initiatives and driving enterprise Salesforce solutions at scale within Accenture\'s delivery practice.',
+    achievements: [
+      'Architecting scalable Salesforce solutions across Sales Cloud and Service Cloud',
+      'Driving deployment strategies and code review standards across the team',
+      'Mentoring developers and establishing best practices for LWC and Apex',
+    ],
+  },
+  {
+    period: 'Sep 2022 — Jun 2025 · 2 yrs 10 mos',
     role: 'Senior Salesforce Developer',
-    company: 'Your Current Company',
+    company: 'Accenture · Hybrid · Jaipur, Rajasthan, India',
     description:
-      'Leading Salesforce development initiatives across Sales Cloud and Service Cloud. Architecting scalable solutions and mentoring junior developers.',
+      'Delivered complex Salesforce implementations across multiple client engagements, contributing to deployment strategies, code review, and cross-functional collaboration.',
     achievements: [
-      'Delivered [X] major platform upgrades on time and under budget',
-      'Reduced page load time by 40% through LWC and Apex optimisation',
-      'Implemented CI/CD pipeline for Salesforce deployments using GitHub Actions',
+      'Spearheaded end-to-end Salesforce deployments with robust CI/CD pipelines',
+      'Expertise in Deployment Strategies, Code Review, and 13+ Salesforce skill areas',
+      'Collaborated with cross-functional teams to deliver CRM transformations on time',
     ],
   },
   {
-    period: '2021 — 2023',
-    role: 'Salesforce Developer',
-    company: 'Previous Company',
+    period: 'Mar 2021 — Sep 2022 · 1 yr 6 mos',
+    role: 'Application Development Analyst',
+    company: 'Accenture · Hyderabad, Telangana, India',
     description:
-      'Developed custom Apex classes, triggers, and Lightning Web Components for enterprise CRM solutions serving 500+ internal users.',
+      'Built and maintained Salesforce solutions leveraging FSL, LWC, and Service Cloud for enterprise clients, developing a strong foundation in platform best practices.',
     achievements: [
-      'Built SAP ↔ Salesforce integration via REST APIs processing 10k records/day',
-      'Automated 15+ business processes with Salesforce Flow',
-      'Achieved Salesforce Platform Developer II certification',
+      'Developed Field Service Lightning (FSL) configurations and custom components',
+      'Built reusable Lightning Web Components used across multiple client orgs',
+      'Implemented Service Cloud solutions improving case resolution efficiency',
     ],
   },
   {
-    period: '2019 — 2021',
-    role: 'Junior Salesforce Developer',
-    company: 'Earlier Company',
+    period: 'Mar 2018 — Mar 2021 · 3 yrs 1 mo',
+    role: 'System Engineer',
+    company: 'Tata Consultancy Services · Full-time · Pune, Maharashtra, India',
     description:
-      'Started career building Salesforce solutions, developing Apex code and working with declarative tools to solve real business problems.',
+      'Delivered Salesforce CRM solutions across Service Cloud, integrations, and custom application development for enterprise clients at TCS.',
     achievements: [
-      'Completed Salesforce Administrator and Platform Developer I certifications',
-      'Developed custom reports and dashboards for C-suite stakeholders',
-      'Supported CRM migration from legacy platform to Salesforce',
+      'Implemented Service Cloud, CTI, and Live Agent for customer support workflows',
+      'Built custom integrations using Apex, Visualforce, and REST/SOAP APIs',
+      'Worked across Lightning, Apex, Visualforce, and Salesforce Configuration',
     ],
   },
 ]
@@ -99,8 +110,8 @@ export default function Experience() {
         <Container>
           <PageTitle>Experience.</PageTitle>
           <Subtitle>
-            My professional journey building Salesforce solutions
-            across various industries.
+            8+ years building Salesforce solutions at Accenture and TCS
+            across enterprise clients globally.
           </Subtitle>
 
           <Timeline>

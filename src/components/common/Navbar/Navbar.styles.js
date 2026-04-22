@@ -7,42 +7,43 @@ export const NavBar = styled.header`
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 52px;
-  background: ${({ $scrolled }) =>
-    $scrolled ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.72)'};
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid
-    ${({ $scrolled, theme }) => ($scrolled ? theme.colors.border : 'transparent')};
-  transition: border-color 0.3s ease, background 0.3s ease;
+  height: 64px;
+  background: transparent;
+  transition: background 0.3s ease;
 `
 
 export const Inner = styled.div`
-  max-width: 980px;
-  margin: 0 auto;
+  width: 100%;
   height: 100%;
-  padding: 0 22px;
+  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: 0 24px;
+  }
 `
 
 export const LogoLink = styled(Link)`
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.022em;
+  font-family: 'Satisfy', cursive;
+  font-size: 26px;
+  font-weight: 400;
   color: ${({ theme }) => theme.colors.text};
+  letter-spacing: 0;
+  line-height: 1;
   transition: opacity 0.2s ease;
 
   &:hover {
-    opacity: 0.65;
+    opacity: 0.6;
   }
 `
 
 export const Links = styled.nav`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 44px;
+  margin-left: auto;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
@@ -50,15 +51,14 @@ export const Links = styled.nav`
 `
 
 export const NavLinkItem = styled(Link)`
-  font-size: 13px;
-  letter-spacing: 0.01em;
-  color: ${({ $active, theme }) =>
-    $active ? theme.colors.text : theme.colors.textSecondary};
-  font-weight: ${({ $active }) => ($active ? '500' : '400')};
-  transition: color 0.2s ease;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: ${({ theme }) => theme.colors.text};
+  transition: opacity 0.2s ease;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.text};
+    opacity: 0.55;
   }
 `
 
@@ -67,7 +67,7 @@ export const Hamburger = styled.button`
   flex-direction: column;
   justify-content: space-between;
   width: 20px;
-  height: 14px;
+  height: 13px;
   background: none;
   border: none;
   padding: 0;
@@ -88,24 +88,23 @@ export const Hamburger = styled.button`
 
 export const MobileNav = styled.div`
   position: fixed;
-  top: 52px;
+  top: 64px;
   left: 0;
   right: 0;
   z-index: 999;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(236, 234, 228, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 8px 22px 20px;
+  padding: 8px 24px 20px;
   display: flex;
   flex-direction: column;
 `
 
 export const MobileLinkItem = styled(Link)`
   font-size: 17px;
-  font-weight: ${({ $active }) => ($active ? '600' : '400')};
-  color: ${({ $active, theme }) =>
-    $active ? theme.colors.text : theme.colors.textSecondary};
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.text};
   padding: 12px 0;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   letter-spacing: -0.01em;

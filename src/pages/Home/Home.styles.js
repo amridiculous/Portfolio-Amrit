@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Wrapper = styled.main`
   background: ${({ theme }) => theme.colors.bg};
@@ -8,20 +9,21 @@ export const Hero = styled.section`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 22px 80px;
-  text-align: center;
-  gap: 24px;
-  position: relative;
-`
-
-export const NameBlock = styled.div`
+  justify-content: space-between;
   overflow: hidden;
 `
 
+export const NameBlock = styled.div`
+  padding: 28px 52px 0;
+  overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 24px 28px 0;
+  }
+`
+
 export const NameHeading = styled.h1`
-  font-size: clamp(54px, 11vw, 120px);
+  font-size: clamp(52px, 9vw, 130px);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 1.0;
@@ -39,57 +41,46 @@ export const Letter = styled.span`
   will-change: transform, opacity;
 `
 
-export const Bio = styled.div`
-  max-width: 520px;
-`
-
-export const BioText = styled.p`
-  font-size: clamp(16px, 2.2vw, 22px);
-  font-weight: 400;
+export const Tagline = styled.p`
+  font-size: clamp(13px, 1.4vw, 18px);
   color: ${({ theme }) => theme.colors.textSecondary};
-  letter-spacing: -0.012em;
-  line-height: 1.55;
+  letter-spacing: 0.005em;
+  margin-top: 14px;
 `
 
-export const AvatarBlock = styled.div`
-  margin-top: 12px;
+export const HeroPreviewZone = styled.div`
+  flex: 1;
+  position: relative;
+  overflow: hidden;
 `
 
-export const AvatarCircle = styled.div`
-  width: 152px;
-  height: 152px;
-  border-radius: 50%;
-  background: linear-gradient(160deg, #f5f5f7 0%, #e4e4ec 100%);
+export const MarqueeRow = styled.div`
+  line-height: 1;
+  padding-bottom: 0;
+`
+
+export const MarqueeInner = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.06),
-    0 16px 48px rgba(0, 0, 0, 0.08),
-    0 4px 12px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 52px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 0 28px;
+  }
 `
 
-export const AvatarInitials = styled.span`
-  font-size: 46px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  color: ${({ theme }) => theme.colors.text};
+export const MarqueeWord = styled(Link)`
+  font-family: 'Bebas Neue', 'Arial Narrow', Impact, sans-serif;
+  font-size: clamp(28px, 7.5vw, 130px);
+  font-weight: 400;
+  line-height: 0.88;
+  white-space: nowrap;
+  display: block;
+  letter-spacing: 0.01em;
   user-select: none;
-`
-
-export const ScrollHint = styled.div`
-  position: absolute;
-  bottom: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-`
-
-export const ScrollDot = styled.div`
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: ${({ theme }) => theme.colors.textSecondary};
-  opacity: 0.35;
+  text-decoration: none;
+  transition: color 0.25s ease, opacity 0.25s ease;
+  color: ${({ $hovered, $accent, theme }) => $hovered ? $accent : theme.colors.text};
+  opacity: ${({ $dimmed }) => ($dimmed ? 0.18 : 1)};
 `

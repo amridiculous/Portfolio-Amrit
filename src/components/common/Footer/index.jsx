@@ -1,9 +1,8 @@
 import { Foot, Inner, Copy, Socials, SocialLink } from './Footer.styles'
 
 const SOCIALS = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/yourprofile' },
-  { label: 'GitHub', href: 'https://github.com/yourusername' },
-  { label: 'Twitter', href: 'https://twitter.com/yourhandle' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/amrit-das-a61985110/' },
+  { label: 'GitHub', href: 'https://github.com/amridiculous' },
 ]
 
 export default function Footer() {
