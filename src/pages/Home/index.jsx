@@ -27,6 +27,15 @@ const SECTIONS = [
   { id: 'creative',   label: 'CREATIVE',   to: '/creative',   accent: '#ff375f' },
 ]
 
+const MOBILE_SEQUENCE = [
+  { section: 'projects',   duration: 2500 },
+  { section: null,         duration: 2000 },
+  { section: 'experience', duration: 2500 },
+  { section: null,         duration: 2000 },
+  { section: 'creative',   duration: 2500 },
+  { section: null,         duration: 2000 },
+]
+
 const BIO_WORDS = (
   'I build web applications and agentic workflows — clean systems that cut through complexity. ' +
   'Design matters as much to me as the code behind it.'
@@ -37,6 +46,7 @@ export default function Home() {
   const taglineRef = useRef(null)
   const [hoveredSection, setHoveredSection] = useState(null)
   const [hoveredName, setHoveredName] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -54,6 +64,37 @@ export default function Home() {
     return () => tl.kill()
   }, [])
 
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  useEffect(() => {
+    if (!isMobile) return
+
+    let cancelled = false
+    let idx = 0
+    let timeoutId
+
+    const step = () => {
+      if (cancelled) return
+      const { section, duration } = MOBILE_SEQUENCE[idx % MOBILE_SEQUENCE.length]
+      setHoveredSection(section)
+      idx++
+      timeoutId = setTimeout(step, duration)
+    }
+
+    timeoutId = setTimeout(step, 800)
+    return () => {
+      cancelled = true
+      clearTimeout(timeoutId)
+      setHoveredSection(null)
+    }
+  }, [isMobile])
+
   return (
     <Wrapper>
       <Hero>
@@ -61,6 +102,7 @@ export default function Home() {
           onMouseEnter={() => setHoveredName(true)}
           onMouseLeave={() => setHoveredName(false)}
           onClick={() => {
+            if (isMobile) return
             setHoveredSection(null)
             setHoveredName(false)
             navigate('/', { replace: true })
@@ -117,7 +159,7 @@ export default function Home() {
             </BioCentered>
           </motion.div>
 
-          {/* Canvas animations — appear on section hover */}
+          {/* Canvas animations — appear on section hover (desktop) or auto-cycle (mobile) */}
           <AnimatePresence mode="sync">
             {hoveredSection === 'projects' && (
               <motion.div
@@ -167,8 +209,8 @@ export default function Home() {
                 $accent={accent}
                 $hovered={hoveredSection === id}
                 $dimmed={hoveredSection !== null && hoveredSection !== id}
-                onMouseEnter={() => setHoveredSection(id)}
-                onMouseLeave={() => setHoveredSection(null)}
+                onMouseEnter={() => { if (!isMobile) setHoveredSection(id) }}
+                onMouseLeave={() => { if (!isMobile) setHoveredSection(null) }}
               >
                 {label}
               </MarqueeWord>
