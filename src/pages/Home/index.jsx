@@ -29,7 +29,7 @@ const SECTIONS = [
 
 const BIO_WORDS = (
   'I build web applications and agentic workflows — clean systems that cut through complexity. ' +
-  'Eight years on the Salesforce platform keeps me grounded in what actually works.'
+  'Design matters as much to me as the code behind it.'
 ).split(' ')
 
 export default function Home() {
