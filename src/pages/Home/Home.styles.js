@@ -19,7 +19,7 @@ export const NameBlock = styled.div`
   cursor: pointer;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: 24px 28px 0;
+    padding: 88px 28px 0;
   }
 `
 

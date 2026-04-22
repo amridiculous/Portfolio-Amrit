@@ -116,14 +116,13 @@ export const MobileNav = styled.div`
   top: 64px;
   left: 0;
   right: 0;
-  z-index: 999;
-  background: rgba(236, 234, 228, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-  padding: 8px 24px 20px;
+  bottom: 0;
+  z-index: 1001;
+  background: ${({ theme }) => theme.colors.bg};
+  padding: 8px 24px 40px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 `
 
 export const MobileLinkItem = styled(Link)`
